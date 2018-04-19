@@ -1,16 +1,6 @@
 # zuul内置参数（包含性能调优参数）
 zuul:
   routes:
-# url配置
-#    poseidon-cloud-example:
-#      path: /poseidon-cloud-example/**
-#      url: http://localhost:8080/poseidon-cloud-example/
-#      sensitive-headers:
-#      custom-sensitive-headers: true
-#    eunomia-server:
-#      path: /eunomia-server/**
-#      url: http://172.19.16.226:8083/eunomia-server/
-
 # serviceId配置
     janus-ws-server:
       path: /ws/**
