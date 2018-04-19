@@ -83,15 +83,6 @@ poseidon-cloud-example:
     NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
     NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
     ServerListRefreshInterval: 1000
-eunomia-server:
-  ribbon:
-    listOfServers: localhost:8088,localhost:7077
-#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
-    NFLoadBalancerRuleClassName: com.pt.janus.zuulserver.loadbalancerrule.IpUserHashRule
-    NFLoadBalancerPingClassName: com.pt.janus.zuulserver.loadbalancerrule.CustomPingUrl
-    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
-    # 默认30s
-    ServerListRefreshInterval: 1000
 
 # 断路器配置
 hystrix:
