@@ -19,10 +19,6 @@ zuul:
       path: /poseidon-cloud-example/**
       stripPrefix: false
       serviceId: poseidon-cloud-example
-    eunomia-server:
-      path: /eunomia-server/**
-      stripPrefix: false
-      serviceId: eunomia-server
 
 # zuul全局属性配置
   add-host-header: true
