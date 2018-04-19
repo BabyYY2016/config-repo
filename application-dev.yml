@@ -10,11 +10,11 @@ zuul:
       path: /connect/**
       serviceId: janus-auth-server
     order-server:
-      path: /or/**
+      path: /order/**
       serviceId: order-server
     payment-server:
-      path: /pa/**
-      serviceId: payment-server
+      path: /pay/**
+      serviceId: payment-
     poseidon-cloud-example:
       path: /poseidon-cloud-example/**
       stripPrefix: false
