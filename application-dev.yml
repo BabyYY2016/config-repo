@@ -70,8 +70,10 @@ janus-auth-server:
 order-server:
   ribbon:
     listOfServers: localhost:8084
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
-    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    NFLoadBalancerRuleClassName: com.pt.janus.zuulserver.loadbalancerrule.IpUserHashRule
+    NFLoadBalancerPingClassName: com.pt.janus.zuulserver.loadbalancerrule.CustomPingUrl
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    #NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
 #    ServerListUpdaterClassName: com.netflix.niws.loadbalancer.EurekaNotificationServerListUpdater
     NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
     ServerListRefreshInterval: 1000
