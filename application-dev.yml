@@ -69,7 +69,7 @@ janus-auth-server:
     ServerListRefreshInterval: 1000
 order-server:
   ribbon:
-#    listOfServers: localhost:8083,localhost:8084,localhost:8085
+    listOfServers: localhost:8084
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
     NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
 #    ServerListUpdaterClassName: com.netflix.niws.loadbalancer.EurekaNotificationServerListUpdater
