@@ -10,7 +10,7 @@ zuul:
       path: /connect/**
       serviceId: janus-auth-server
     order-server:
-      path: /or/**
+      path: /order/**
       serviceId: order-server
     payment-server:
       path: /pay/**
@@ -86,6 +86,15 @@ poseidon-cloud-example:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
     NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
     NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
+    ServerListRefreshInterval: 1000
+eunomia-server:
+  ribbon:
+    listOfServers: localhost:8088,localhost:7077
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    NFLoadBalancerRuleClassName: com.pt.janus.zuulserver.loadbalancerrule.IpUserHashRule
+    NFLoadBalancerPingClassName: com.pt.janus.zuulserver.loadbalancerrule.CustomPingUrl
+    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
+    # 默认30s
     ServerListRefreshInterval: 1000
 
 # 断路器配置
