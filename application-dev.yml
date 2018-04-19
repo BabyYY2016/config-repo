@@ -10,7 +10,7 @@ zuul:
       path: /connect/**
       serviceId: janus-auth-server
     order-server:
-      path: /order/**
+      path: /od/**
       serviceId: order-server
     payment-server:
       path: /pay/**
