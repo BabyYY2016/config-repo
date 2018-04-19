@@ -1,0 +1,147 @@
+# zuul内置参数（包含性能调优参数）
+zuul:
+  routes:
+# url配置
+#    poseidon-cloud-example:
+#      path: /poseidon-cloud-example/**
+#      url: http://localhost:8080/poseidon-cloud-example/
+#      sensitive-headers:
+#      custom-sensitive-headers: true
+#    eunomia-server:
+#      path: /eunomia-server/**
+#      url: http://172.19.16.226:8083/eunomia-server/
+
+# serviceId配置
+    janus-ws-server:
+      path: /ws/**
+      stripPrefix: false
+      serviceId: janus-ws-server
+    janus-auth-server:
+      path: /connect/**
+      serviceId: janus-auth-server
+    order-server:
+      path: /order/**
+      serviceId: order-server
+    payment-server:
+      path: /pay/**
+      serviceId: payment-server
+    poseidon-cloud-example:
+      path: /poseidon-cloud-example/**
+      stripPrefix: false
+      serviceId: poseidon-cloud-example
+    eunomia-server:
+      path: /eunomia-server/**
+      stripPrefix: false
+      serviceId: eunomia-server
+
+# zuul全局属性配置
+  add-host-header: true
+  sensitive-headers:
+  ignore-security-headers: false
+  host:
+    # 默认2000
+    connect-timeout-millis: 10000
+    # 默认1000
+    socket-timeout-millis: 30000
+# 每个服务的http客户端连接池最大连接，默认值是200
+    max-total-connections: 200
+# 每个route可用的最大连接数，默认值是20
+    max-per-route-connections: 20
+  retryable: true
+# 禁用的默认过滤器
+  SimpleHostRoutingFilter:
+    route:
+      disable: true
+
+# 是否启用Eureka
+ribbon:
+  eureka:
+    enabled: false
+#  eager-load:
+#    enabled: true
+#    clients: eunomia-server
+  ReadTimeout: 20000
+  ConnectTimeout: 10000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 2
+  retryableStatusCodes: 404,502,500,408
+#  OkToRetryOnAllOperations: true
+
+# ribbon服务负载均衡配置
+janus-ws-server:
+  ribbon:
+    listOfServers: localhost:8087
+janus-auth-server:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
+    ServerListRefreshInterval: 1000
+order-server:
+  ribbon:
+#    listOfServers: localhost:8083,localhost:8084,localhost:8085
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+#    ServerListUpdaterClassName: com.netflix.niws.loadbalancer.EurekaNotificationServerListUpdater
+    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
+    ServerListRefreshInterval: 1000
+payment-server:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
+    ServerListRefreshInterval: 1000
+poseidon-cloud-example:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
+    ServerListRefreshInterval: 1000
+eunomia-server:
+  ribbon:
+    listOfServers: localhost:8088,localhost:7077
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    NFLoadBalancerRuleClassName: com.pt.janus.zuulserver.loadbalancerrule.IpUserHashRule
+    NFLoadBalancerPingClassName: com.pt.janus.zuulserver.loadbalancerrule.CustomPingUrl
+    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
+    # 默认30s
+    ServerListRefreshInterval: 1000
+
+# 断路器配置
+hystrix:
+  command:
+    order-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+    payment-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+    eunomia-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+    poseidon-cloud-example:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+# 健康检查只应该在application.yml中设置
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    # eureka client刷新本地缓存时间,默认30s
+    registryFetchIntervalSeconds: 5
+  instance:
+#    prefer-ip-address: true
+#    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    # 服务刷新时间配置,每隔这个时间会主动心跳一次，默认30s
+    lease-renewal-interval-in-seconds: 30
+    # 服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除,默认90秒
+    lease-expiration-duration-in-seconds: 90
