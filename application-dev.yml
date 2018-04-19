@@ -11,7 +11,7 @@ zuul:
       serviceId: janus-auth-server
     order-server:
       path: /order/**
-      serviceId: order-server
+      serviceId: order
     payment-server:
       path: /pay/**
       serviceId: payment-server
