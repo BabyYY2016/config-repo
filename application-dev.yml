@@ -23,10 +23,6 @@ zuul:
       path: /eunomia-server/**
       stripPrefix: false
       serviceId: eunomia-server
-    bpm-server:
-      path: /bpm-server/**
-      stripPrefix: false
-      serviceId: bpm-server
 
 # zuul全局属性配置
   add-host-header: true
