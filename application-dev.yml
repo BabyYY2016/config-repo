@@ -2,27 +2,12 @@
 zuul:
   routes:
 # serviceId配置
-    janus-ws-server:
-      path: /ws/**
-      stripPrefix: false
-      serviceId: janus-ws-server
-    janus-auth-server:
-      path: /connect/**
-      serviceId: janus-auth-server
     order-server:
       path: /order/**
       serviceId: order-server
     payment-server:
       path: /pay/**
       serviceId: payment-server
-    poseidon-cloud-example:
-      path: /poseidon-cloud-example/**
-      stripPrefix: false
-      serviceId: poseidon-cloud-example
-    eunomia-server:
-      path: /eunomia-server/**
-      stripPrefix: false
-      serviceId: eunomia-server
 
 # zuul全局属性配置
   add-host-header: true
@@ -58,15 +43,6 @@ ribbon:
 #  OkToRetryOnAllOperations: true
 
 # ribbon服务负载均衡配置
-janus-ws-server:
-  ribbon:
-    listOfServers: localhost:8087
-janus-auth-server:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
-    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
-    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
-    ServerListRefreshInterval: 1000
 order-server:
   ribbon:
     listOfServers: localhost:8084
@@ -81,41 +57,11 @@ payment-server:
     NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
     NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
     ServerListRefreshInterval: 1000
-poseidon-cloud-example:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
-    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
-    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
-    ServerListRefreshInterval: 1000
-eunomia-server:
-  ribbon:
-    listOfServers: localhost:8088,localhost:7077
-#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
-    NFLoadBalancerRuleClassName: com.pt.janus.zuulserver.loadbalancerrule.IpUserHashRule
-    NFLoadBalancerPingClassName: com.pt.janus.zuulserver.loadbalancerrule.CustomPingUrl
-    NFLoadBalancerClassName: com.netflix.loadbalancer.DynamicServerListLoadBalancer
-    # 默认30s
-    ServerListRefreshInterval: 1000
 
 # 断路器配置
 hystrix:
   command:
-    order-server:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
-    payment-server:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
-    eunomia-server:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
-    poseidon-cloud-example:
+    default:
       execution:
         isolation:
           thread:
