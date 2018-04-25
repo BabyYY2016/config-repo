@@ -66,6 +66,11 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000
+    order-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 80000
 
 # 健康检查只应该在application.yml中设置
 eureka:
