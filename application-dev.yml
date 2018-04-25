@@ -45,7 +45,7 @@ ribbon:
 # ribbon服务负载均衡配置
 order-server:
   ribbon:
-    listOfServers: localhost:8085
+    listOfServers: localhost:8084,localhost:8085
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
     #NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
 #    ServerListUpdaterClassName: com.netflix.niws.loadbalancer.EurekaNotificationServerListUpdater
